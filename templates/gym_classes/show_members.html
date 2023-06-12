@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h3>Class: {{ gym_class.name }}</h3>
+    <p>Class ID: {{ gym_class.id }}</p>
+    {% for member in members %}
+    <section>
+        <h3>Member: {{ member.name }}</h3>
+        <p>Member ID: {{ member.id }}</p>
+    </section>
+</section>
+
+
+{% endfor %}
+
+{% endblock %}
