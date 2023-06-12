@@ -11,10 +11,12 @@ def select_all():
     members = []
     sql = "SELECT * FROM members"
     results = run_sql(sql)
-    for row in results:
-        date_of_birth = datetime.date.strftime(row["date_of_birth"], '%Y-%m-%d')
-        member = Member(row["name"], date_of_birth, row["premium"], row["active"], row["id"])
-        members.append(member)
+    if results:
+        for row in results:
+            date_of_birth = datetime.date.strftime(row["date_of_birth"], '%Y-%m-%d')
+            member = Member(row["name"], date_of_birth, row["premium"], row["active"], row["id"])
+            members.append(member)
+    members.sort(key=lambda x: x.id)
     return members
 
 def save(member):

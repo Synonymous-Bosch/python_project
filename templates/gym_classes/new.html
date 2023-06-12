@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Add a New Class</h2>
+
+<form action="/gym_classes" method="POST">
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name">
+        <label for="date">Date: </label>
+        <input type="date" id="date" name="date">
+        <label for="start_time">Start time: </label>
+        <input type="time" id="start_time" name="start_time">
+        <label for="duration">Duration: </label>
+        <input type="number" id="duration" name="duration">
+        <label for="max_capacity">Max Capacity: </label>
+        <input type="number" id="max_capacity" name="max_capacity">
+        <input type="submit">
+    </div>
+</form>
+
+{% endblock %}

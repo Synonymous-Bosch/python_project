@@ -7,7 +7,7 @@ members_blueprint = Blueprint("members", __name__)
 
 # INDEX
 @members_blueprint.route("/members")
-def memnbers():
+def members():
     members = member_repository.select_all()
     return render_template("members/index.html", members=members)
 
@@ -26,15 +26,30 @@ def create_members():
     premium = request.form["premium"]
     new_member = Member(name, date_of_birth, premium)
     member_repository.save(new_member)
-    return redirect("/humans")
+    return redirect("/members")
 
 
-# # EDIT
+# EDIT
+@members_blueprint.route("/members/<id>/edit")
+def edit_member(id):
+    member = member_repository.select(id)
+    return render_template('members/edit.html', member=member)
 
 
+# UPDATE
+@members_blueprint.route("/members/<id>", methods=["POST"])
+def update_member(id):
+    name = request.form["name"]
+    date_of_birth = request.form["date_of_birth"]
+    premium = request.form["premium"]
+    active = request.form["active"]
+    member = Member(name, date_of_birth, premium, active, id)
+    member_repository.update(member)
+    return redirect("/members")
 
-# # UPDATE
 
-
-
-# # DELETE
+# DELETE
+@members_blueprint.route("/members/<id>/delete", methods=["POST"])
+def delete_member(id):
+    member_repository.delete(id)
+    return redirect("/members")

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <ul>
+        <li><a href="/members/new">Add a new member</a></li>
+    </ul>
+    <h1>Member List</h1>
+
+</section>
+<section>
+    {% for member in members %}
+      <h3>Member: {{ member.name }}</h3>
+      <p>Date of birth: {{ member.date_of_birth }}</p>
+      <p>Premium: {{ member.premium }}</p>
+      <p>Active: {{ member.active }}</p>
+      <form action="/members/{{ member.id }}/delete" method="POST">
+        <input type="submit" value="Delete">
+    </form>
+    {% endfor %}
+</section>
+
+{% endblock %}

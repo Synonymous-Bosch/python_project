@@ -6,7 +6,7 @@ CREATE TABLE gym_classes (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     date DATE NOT NULL,
-    time TIME NOT NULL,
+    start_time TIME NOT NULL,
     duration INT NOT NULL,
     max_capacity INT NOT NULL,
     active BOOLEAN

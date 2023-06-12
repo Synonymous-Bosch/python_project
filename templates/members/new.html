@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Add a New Member</h2>
+
+<form action="/members" method="POST">
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name">
+        <label for="date_of_birth">Date of birth: </label>
+        <input type="date" id="date_of_birth" name="date_of_birth">
+        <label for="premium">Premium:</label>
+        <select id="premium" name="premium">
+            <option value='True'>Yes</option>
+            <option value='False'>No</option>
+        </select>
+        <input type="submit">
+    </div>
+</form>
+
+{% endblock %}

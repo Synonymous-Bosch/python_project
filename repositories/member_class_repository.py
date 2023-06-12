@@ -19,6 +19,8 @@ def select_all():
         member = member_repository.select(row["member_id"])
         member_gym_class = Member_class(gym_class, member, row["id"])
         members_gym_classes.append(member_gym_class)
+        
+    members_gym_classes.sort(key=lambda x: x.date)
     return members_gym_classes
 
 def save(member_gym_class):

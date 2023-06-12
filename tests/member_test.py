@@ -2,6 +2,7 @@ import unittest
 import datetime
 
 from models.member import Member
+from repositories import member_repository, gym_class_repository, member_class_repository
 
 class TestMember(unittest.TestCase):
     def setUp(self):
@@ -15,3 +16,9 @@ class TestMember(unittest.TestCase):
 
     def test_member_has_premium(self):
         self.assertEqual(True, self.member1.premium)
+
+    def test_add_member_to_members(self):
+        member_repository.delete_all()
+        member_repository.save(self.member1)
+        result = member_repository.select_all()
+        self.assertEqual("Peter Cushing", result[0].name)
