@@ -56,8 +56,9 @@ def select(id):
     return member_gym_class
 
 def delete(member_id, gym_class_id):
-    sql = "DELETE FROM members_gym_classes WHERE member_id = %s AND gym_class_id = %s"
-    values = [member_id, gym_class_id]
+    member_gym_class = select_for_delete(member_id, gym_class_id)
+    sql = "DELETE FROM members_gym_classes WHERE id = %s"
+    values = [member_gym_class.id]
     run_sql(sql, values)
 
 
@@ -65,3 +66,15 @@ def update(member_gym_class):
     sql = "UPDATE members SET (gym_class_id, member_id)  = (%s, %s) WHERE id = %s"
     values = [member_gym_class.gym_class.id, member_gym_class.member.id, member_gym_class.id]
     run_sql(sql, values)
+
+def select_for_delete(member_id, gym_class_id):
+    sql = "SELECT * FROM members_gym_classes WHERE member_id = %s AND gym_class_id = %s"
+    values = [member_id, gym_class_id]
+    results = run_sql(sql, values)
+
+    if results:
+        result = results[0]
+        gym_class = gym_class_repository.select(result['gym_class_id'])
+        member = member_repository.select(result['member_id'])
+        member_gym_class = Member_class(gym_class, member, result["id"])
+    return member_gym_class
