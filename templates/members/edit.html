@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Update Member</h2>
+<h2 class="page_heading">Update Member</h2>
 
+<div class="form_page"
 <form action="/members/{{ member.id }}" method="POST">
     <div>
         <label for="name">Name: </label>
@@ -22,5 +23,6 @@
         <input type="submit">
     </div>
 </form>
+</div>
 
 {% endblock %}

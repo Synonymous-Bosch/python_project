@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Add a New Class</h2>
-
+<h2 class="page_heading">Add a New Class</h2>
+<section class="form_page">
 <form action="/gym_classes" method="POST">
     <div>
         <label for="name">Name: </label>
@@ -17,6 +17,7 @@
         <input type="number" id="max_capacity" name="max_capacity">
         <input type="submit">
     </div>
+</section>
 </form>
 
 {% endblock %}

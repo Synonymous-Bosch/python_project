@@ -1,6 +1,7 @@
 from db.run_sql import run_sql
 import pdb
 import datetime
+from datetime import date
 from models.gym_class import Gym_class
 from models.member import Member
 
@@ -11,10 +12,13 @@ def delete_all():
 def select_all():
     gym_classes = []
     # pdb.set_trace()
-    sql = "SELECT * FROM gym_classes WHERE active = True"
-    results = run_sql(sql)
+    today = datetime.date.today()
+    sql = "SELECT * FROM gym_classes WHERE active = True AND date >= %s"
+    values = [today]
+    results = run_sql(sql, values)
     for row in results:
-        gym_class = Gym_class(row["name"], row["date"], row["start_time"], row["duration"], row["max_capacity"], row["active"], row["id"])
+        date = datetime.date.strftime(row["date"], '%d-%m-%Y')
+        gym_class = Gym_class(row["name"], date, row["start_time"], row["duration"], row["max_capacity"], row["active"], row["id"])
         gym_classes.append(gym_class)
     gym_classes.sort(key=lambda x: x.date)
     return gym_classes
@@ -25,7 +29,8 @@ def select_all_inactive():
     sql = "SELECT * FROM gym_classes WHERE active = False"
     results = run_sql(sql)
     for row in results:
-        gym_class = Gym_class(row["name"], row["date"], row["start_time"], row["duration"], row["max_capacity"], row["active"], row["id"])
+        date = datetime.date.strftime(row["date"], '%d-%m-%Y')
+        gym_class = Gym_class(row["name"], date, row["start_time"], row["duration"], row["max_capacity"], row["active"], row["id"])
         gym_classes.append(gym_class)
     gym_classes.sort(key=lambda x: x.date)
     return gym_classes
@@ -45,7 +50,8 @@ def select(id):
 
     if results:
         result = results[0]
-        gym_class = Gym_class(result["name"], result["date"], result["start_time"], result["duration"], result["max_capacity"], result["active"], result["id"])
+        date = datetime.date.strftime(result["date"], '%d-%m-%Y')
+        gym_class = Gym_class(result["name"], date, result["start_time"], result["duration"], result["max_capacity"], result["active"], result["id"])
     return gym_class
 
 def delete(id):
@@ -56,7 +62,7 @@ def delete(id):
 
 def update(gym_class):
     sql = "UPDATE gym_classes SET (name, date, start_time, duration, max_capacity, active) = (%s, %s, %s, %s, %s, %s) WHERE id = %s"
-    values = [gym_class.name, str(gym_class.date), str(gym_class.start_time), gym_class.duration, gym_class.max_capacity, gym_class.active, gym_class.id]
+    values = [gym_class.name, gym_class.date, gym_class.start_time, gym_class.duration, gym_class.max_capacity, gym_class.active, gym_class.id]
     run_sql(sql, values)
 
 def show_members(gym_class):

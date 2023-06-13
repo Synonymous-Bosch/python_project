@@ -1,22 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section>
-    <h3>Class: {{ gym_class.name }}</h3>
-    <p>Class ID: {{ gym_class.id }}</p>
-    <p>Date: {{ gym_class.date }}</p>
-    <p>Start time: {{ gym_class.start_time }}</p>
-    <p>Duration: {{ gym_class.duration }}</p>
-    <p>Class capacity: {{ gym_class.max_capacity }}</p>
-    <p>Active: {{ gym_class.active }}</p>
+
+<section class="headliner">
+    <div class="show_list">
+        <h3>Class: {{ gym_class.name }}</h3>
+        <p>Class ID: {{ gym_class.id }}</p>
+        <p>Date: {{ gym_class.date }}</p>
+        <p>Start time: {{ gym_class.start_time }}</p>
+        <p>Duration: {{ gym_class.duration }}</p>
+        <p>Class capacity: {{ gym_class.max_capacity }}</p>
+        <p>Active: {{ gym_class.active }}</p>
+        
+    </div>
+</section>   
+        
+<section class="show_list_container">
     {% for member in members %}
-    <section>
+    <div class="show_list">
+        
         <h3>Member: {{ member.name }}</h3>
         <p>Member ID: {{ member.id }}</p>
-    </section>
+        
+    </div>
+    {% endfor %}
 </section>
+    
+    
 
 
-{% endfor %}
+
+
 
 {% endblock %}

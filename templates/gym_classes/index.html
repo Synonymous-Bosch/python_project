@@ -2,38 +2,42 @@
 
 {% block content %}
 
-<section>
-    <ul>
-        <li><a href="/gym_classes/new">Add a new class</a></li>
-    </ul>
-    <h1>Class List</h1>
-</section>
+
+
+    <h1 class="page_heading">Class List</h1>
+    <section class="show_list_container">
 {% for gym_class in gym_classes %}
-    <section>
+    <section class="show_list">
 
-      <h3>Class: {{ gym_class.name }}</h3>
-      <p>Date: {{ gym_class.date }}</p>
-      <p>Start time: {{ gym_class.start_time.strftime('%H:%M') }}</p>
-      <p>Active: {{ gym_class.active }}</p>
-      <form action="/gym_classes/{{ gym_class.id }}/delete" method="POST">
-        <input type="submit" value="Delete">
-      <p><a href="/gym_classes/{{ gym_class.id }}/edit">Edit</a> </p>
-      <p><a href="/gym_class/{{ gym_class.id }}/show_members">Show registered members</a></p>
-    </section>
-{% endfor %}
-
-<h1>Inactive Classes</h1>
+        <h3>Class: {{ gym_class.name }}</h3>
+        <p>Date: {{ gym_class.date }}</p>
+        <p>Start time: {{ gym_class.start_time.strftime('%H:%M') }}</p>
+        <p>Active: {{ gym_class.active }}</p>
+        <p><a href="/gym_class/{{ gym_class.id }}/show_members">Show registered members</a></p>
+        <div>
+          <form action="/gym_classes/{{ gym_class.id }}/delete" method="POST">
+            <input type="submit" value="Delete">
+          <p><a href="/gym_classes/{{ gym_class.id }}/edit">Edit</a> </p> 
+        </div>
+      </section>
+  {% endfor %}
+  </section>
+<h1 class="page_heading">Inactive Classes</h1>
+<section class="show_list_container">
 {% for inactive_class in inactive_classes %}
-    <section>
+    <section class="show_list">
 
       <h3>Class: {{ inactive_class.name }}</h3>
       <p>Date: {{ inactive_class.date }}</p>
       <p>Start time: {{ inactive_class.start_time.strftime('%H:%M') }}</p>
       <p>Active: {{ inactive_class.active }}</p>
-      <form action="/gym_classes/{{ inactive_class.id }}/delete" method="POST">
-        <input type="submit" value="Delete">
-      <p><a href="/gym_classes/{{ inactive_class.id }}/edit">Edit</a> </p>
+      <div>
+        <form action="/gym_classes/{{ inactive_class.id }}/delete" method="POST">
+          <input type="submit" value="Delete">
+        <p><a href="/gym_classes/{{ inactive_class.id }}/edit">Edit</a> </p>
+      </div>
     </section>
 {% endfor %}
+</section>
 
 {% endblock %}

@@ -14,7 +14,7 @@ def select_all():
     results = run_sql(sql)
     if results:
         for row in results:
-            date_of_birth = datetime.date.strftime(row["date_of_birth"], '%Y-%m-%d')
+            date_of_birth = datetime.date.strftime(row["date_of_birth"], '%d-%m-%Y')
             member = Member(row["name"], date_of_birth, row["premium"], row["active"], row["id"])
             members.append(member)
     members.sort(key=lambda x: x.id)

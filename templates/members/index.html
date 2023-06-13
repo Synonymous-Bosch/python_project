@@ -3,24 +3,25 @@
 {% block content %}
 
 <section>
-    <ul>
-        <li><a href="/members/new">Add a new member</a></li>
-    </ul>
-    <h1>Member List</h1>
+
+    <h1 class="page_heading">Member List</h1>
 
 </section>
-<section>
+<section class="show_list_container">
     {% for member in members %}
-      <h3>Member: {{ member.name }}</h3>
-      <p>Date of birth: {{ member.date_of_birth }}</p>
-      <p>Premium: {{ member.premium }}</p>
-      <p>Active: {{ member.active }}</p>
-      <form action="/members/{{ member.id }}/delete" method="POST">
-        <input type="submit" value="Delete">
-    </form>
-    <p><a href="/members/{{ member.id }}/edit">Edit</a> </p>
-    <!-- <p><a href="../members_classes/new">Register for a class</a> </p> -->
-    <p><a href="/members/{{ member.id }}/show_classes">Member's classes</a></p>
+    <div class="show_list">
+        <h3>Member: {{ member.name }}</h3>
+        <p>Date of birth: {{ member.date_of_birth }}</p>
+        <p>Premium: {{ member.premium }}</p>
+        <p>Active: {{ member.active }}</p>
+        <p><a href="/members/{{ member.id }}/show_classes">Member's classes</a></p>
+        <div>
+            <p><a href="/members/{{ member.id }}/edit">Edit</a> </p>        
+            <form action="/members/{{ member.id }}/delete" method="POST">
+                <input type="submit" value="Delete">
+            </form>
+        </div>
+    </div>
     {% endfor %}
 </section>
 

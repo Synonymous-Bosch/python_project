@@ -2,9 +2,10 @@
 
 {% block content %} 
 
-<h2>Update Class</h2>
+<h2 class="page_heading">Update Class</h2>
 
-<div>
+<div class="form_page">
+  
     <form action="/gym_classes/{{ gym_class.id }}" method="POST">
         <label for="name">Name: </label>
         <input type="text" id="name" name="name" value="{{ gym_class.name }}">

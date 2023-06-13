@@ -1,5 +1,5 @@
 from flask import Blueprint, Flask, redirect, render_template, request
-
+import pdb
 from models.gym_class import Gym_class
 import repositories.gym_class_repository as gym_class_repository
 
@@ -42,6 +42,7 @@ def edit_gym_class(id):
 # UPDATE
 @gym_class_blueprint.route("/gym_classes/<id>", methods=["POST"])
 def update_gym_classes(id):
+    # pdb.set_trace()
     name = request.form["name"]
     date = request.form["date"]
     start_time = request.form["start_time"]
