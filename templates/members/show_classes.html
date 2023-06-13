@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+    <h3>Member: {{ member.name }}</h3>
+    <p>Member ID: {{ member.id }}</p>
+    <p>Date of birth: {{ member.date_of_birth }}</p>
+    <p>Premium: {{ member.premium }}</p>
+    <p>Active: {{ member.active }}</p>
+    <section>
+        <h1>Register for a class</h1>
+    </section>
+    <form action="/members_classes/{{ member.id }}/show_classes/new" method="POST">
+
+        <label for="gym_class">Class: </label>
+
+        <select id="gym_class" name="gym_class">
+            {% for new_class in new_classes %}
+                <option value="{{ new_class.id }}">{{ new_class.name }}: {{ new_class.date }} {{ new_class.time }}</option>
+<!-- 
+                <form action="/members_classes/{{ member.id }}/delete" method="POST">
+                    <input type="submit" value="Delete">
+                </form> -->
+
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </div>
+
+</form>
+
+    {% for class in classes %}
+    <section>
+        <h3>Class: {{ class.name }}</h3>
+        <p>Date: {{ class.date }}</p>
+        <p>Time: {{ class.start_time.strftime('%H:%M') }}</p>
+              <form action="/members_classes/{{ member.id }}/{{ class.id }}/delete" method="POST">
+        <input type="submit" value="Delete">
+    </form>
+    </section>
+</section>
+
+
+
+
+
+{% endfor %}
+
+{% endblock %}

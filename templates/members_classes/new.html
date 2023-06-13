@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <h1>Register for a class</h1>
+</section>
+
+<form action="/members_classes" method="POST">
+    <div>
+        <label for="members">Member: </label>
+
+        <select id="member" name="member">
+            {% for member in members %}
+                <option value="{{ member.id }}">{{ member.name }}: {{ member.date_of_birth }}</option>
+            {% endfor %}
+        </select>
+        <label for="gym_class">Class: </label>
+
+        <select id="gym_class" name="gym_class">
+            {% for class in classes %}
+                <option value="{{ class.id }}">{{ class.name }}: {{ class.date }} {{ class.time }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </div>
+</form>
+
+{% endblock %}

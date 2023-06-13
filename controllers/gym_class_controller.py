@@ -9,7 +9,8 @@ gym_class_blueprint = Blueprint("gym_classes", __name__)
 @gym_class_blueprint.route("/gym_classes")
 def gym_class():
     gym_classes = gym_class_repository.select_all()
-    return render_template("gym_classes/index.html", gym_classes=gym_classes)
+    inactive_classes = gym_class_repository.select_all_inactive()
+    return render_template("gym_classes/index.html", gym_classes=gym_classes, inactive_classes = inactive_classes)
 
 
 # NEW
@@ -58,3 +59,9 @@ def delete_gym_class(id):
     gym_class_repository.delete(id)
     return redirect("/gym_classes")
 
+# SHOW MEMBERS BY CLASS
+@gym_class_blueprint.route("/gym_class/<id>/show_members")
+def show_classes_by_member(id):
+    gym_class = gym_class_repository.select(id)
+    members = gym_class_repository.show_members(gym_class)
+    return render_template('gym_classes/show_members.html', members=members, gym_class=gym_class)

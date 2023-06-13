@@ -1,4 +1,6 @@
 from db.run_sql import run_sql
+import datetime
+import pdb
 
 from models.member import Member
 from models.gym_class import Gym_class
@@ -19,16 +21,27 @@ def select_all():
         member = member_repository.select(row["member_id"])
         member_gym_class = Member_class(gym_class, member, row["id"])
         members_gym_classes.append(member_gym_class)
-        
-    members_gym_classes.sort(key=lambda x: x.date)
+
     return members_gym_classes
 
-def save(member_gym_class):
-    sql = "INSERT INTO members_gym_classes (gym_class_id, member_id) VALUES (%s, %s) RETURNING id"
-    values = [member_gym_class.gym_class.id, member_gym_class.member.id, member_gym_class.id]
-    results = run_sql(sql, values)
-    id = results[0]['id']
-    member_gym_class.id = id
+def save(member_class):
+    members_in_class = gym_class_repository.show_members(member_class.gym_class)
+    # Classes from 17:30 are for premium customers only
+    premium_class = False
+    if member_class.gym_class.start_time >= datetime.time(hour=17, minute=30):
+        premium_class = True
+    if member_class.member.premium or premium_class == False:
+        if member_class.gym_class.max_capacity > len(members_in_class):
+            sql = "INSERT INTO members_gym_classes (gym_class_id, member_id) VALUES (%s, %s) RETURNING id"
+            values = [member_class.gym_class.id, member_class.member.id]
+            results = run_sql(sql, values)
+            id = results[0]['id']
+            member_class.id = id
+        else: 
+            return "Class is full!"
+    else: 
+        return "Class is for premium customers only"
+    
 
 def select(id):
     sql = "SELECT * FROM members_gym_classes WHERE id = %s"
@@ -42,9 +55,9 @@ def select(id):
         member_gym_class = Member_class(gym_class, member, result["id"])
     return member_gym_class
 
-def delete(id):
-    sql = "DELETE FROM members_gym_classes WHERE id = %s"
-    values = [id]
+def delete(member_id, gym_class_id):
+    sql = "DELETE FROM members_gym_classes WHERE member_id = %s AND gym_class_id = %s"
+    values = [member_id, gym_class_id]
     run_sql(sql, values)
 
 

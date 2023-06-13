@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Add a New Member</h2>
+<h2>Update Member</h2>
 
-<form action="/members" method="POST">
+<form action="/members/{{ member.id }}" method="POST">
     <div>
         <label for="name">Name: </label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" value="{{ member.name }}">
         <label for="date_of_birth">Date of birth: </label>
-        <input type="date" id="date_of_birth" name="date_of_birth">
+        <input type="date" id="date_of_birth" name="date_of_birth" value="{{ member.date_of_birth }}">
         <label for="premium">Premium:</label>
-        <select id="premium" name="premium">
+        <select id="premium" name="premium" value="{{ member.premium }}">
+            <option value='True'>Yes</option>
+            <option value='False'>No</option>
+        </select>
+        <label for="active">Active:</label>
+        <select id="active" name="active" value="{{ member.active }}">
             <option value='True'>Yes</option>
             <option value='False'>No</option>
         </select>

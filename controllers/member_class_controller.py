@@ -17,17 +17,21 @@ def member_class():
 # # NEW
 @member_class_blueprint.route("/members_classes/new")
 def new_member_class():
-    return render_template("members_classes/new.html")
+    members = member_repository.select_all()
+    gym_classes = gym_class_repository.select_all()
+    return render_template("members_classes/new.html", members=members, classes=gym_classes)
 
 
 # # CREATE
 @member_class_blueprint.route("/members_classes", methods=["POST"])
 def create_member_class():
-    gym_class_id = request.form["class_id"]
-    member_id = request.form["member_id"]
-    new_member_class = Member_class(gym_class_id, member_id)
+    gym_class_id = request.form["gym_class"]
+    gym_class = gym_class_repository.select(gym_class_id)
+    member_id = request.form["member"]
+    member = member_repository.select(member_id)
+    new_member_class = Member_class(gym_class, member)
     member_class_repository.save(new_member_class)
-    return redirect("/members_classes")
+    return redirect("/members")
 
 
 # # EDIT
@@ -48,7 +52,17 @@ def update_member_class(id):
 
 
 # # DELETE
-@member_class_blueprint.route("/members_classes/<id>/delete", methods=["POST"])
-def delete_member_class(id):
-    member_class_repository.delete(id)
-    return redirect("/members_classes")
+@member_class_blueprint.route("/members_classes/<member_id>/<gym_class_id>/delete", methods=["POST"])
+def delete_member_class(member_id, gym_class_id):
+    member_class_repository.delete(member_id, gym_class_id)
+    return redirect(f"/members/{member_id}/show_classes")
+
+# # CREATE BY MEMBER
+@member_class_blueprint.route("/members_classes/<id>/show_classes/new", methods=["POST"])
+def register_class_by_member(id):
+    gym_class_id = request.form["gym_class"]
+    gym_class = gym_class_repository.select(gym_class_id)
+    member = member_repository.select(id)
+    new_member_class = Member_class(gym_class, member)
+    member_class_repository.save(new_member_class)
+    return redirect(f"/members/{member.id}/show_classes")

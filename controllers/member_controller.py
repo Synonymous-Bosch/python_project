@@ -1,7 +1,10 @@
 from flask import Blueprint, Flask, redirect, render_template, request
 
 from models.member import Member
+from models.member_class import Member_class
 import repositories.member_repository as member_repository
+import repositories.gym_class_repository as gym_class_repository
+import repositories.member_class_repository as member_class_repository
 
 members_blueprint = Blueprint("members", __name__)
 
@@ -53,3 +56,13 @@ def update_member(id):
 def delete_member(id):
     member_repository.delete(id)
     return redirect("/members")
+
+# SHOW CLASSES BY MEMBER
+@members_blueprint.route("/members/<id>/show_classes")
+def show_classes_by_member(id):
+    member = member_repository.select(id)
+    classes = member_repository.show_classes(member)
+    new_classes = gym_class_repository.select_all()
+    return render_template('members/show_classes.html', classes=classes, member=member, new_classes=new_classes)
+
+

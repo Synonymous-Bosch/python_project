@@ -22,4 +22,18 @@
     </section>
 {% endfor %}
 
+<h1>Inactive Classes</h1>
+{% for inactive_class in inactive_classes %}
+    <section>
+
+      <h3>Class: {{ inactive_class.name }}</h3>
+      <p>Date: {{ inactive_class.date }}</p>
+      <p>Start time: {{ inactive_class.start_time.strftime('%H:%M') }}</p>
+      <p>Active: {{ inactive_class.active }}</p>
+      <form action="/gym_classes/{{ inactive_class.id }}/delete" method="POST">
+        <input type="submit" value="Delete">
+      <p><a href="/gym_classes/{{ inactive_class.id }}/edit">Edit</a> </p>
+    </section>
+{% endfor %}
+
 {% endblock %}

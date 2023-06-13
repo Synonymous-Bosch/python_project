@@ -2,6 +2,7 @@ from db.run_sql import run_sql
 import pdb
 import datetime
 from models.gym_class import Gym_class
+from models.member import Member
 
 def delete_all():
     sql = "DELETE FROM gym_classes"
@@ -10,7 +11,18 @@ def delete_all():
 def select_all():
     gym_classes = []
     # pdb.set_trace()
-    sql = "SELECT * FROM gym_classes"
+    sql = "SELECT * FROM gym_classes WHERE active = True"
+    results = run_sql(sql)
+    for row in results:
+        gym_class = Gym_class(row["name"], row["date"], row["start_time"], row["duration"], row["max_capacity"], row["active"], row["id"])
+        gym_classes.append(gym_class)
+    gym_classes.sort(key=lambda x: x.date)
+    return gym_classes
+
+def select_all_inactive():
+    gym_classes = []
+    # pdb.set_trace()
+    sql = "SELECT * FROM gym_classes WHERE active = False"
     results = run_sql(sql)
     for row in results:
         gym_class = Gym_class(row["name"], row["date"], row["start_time"], row["duration"], row["max_capacity"], row["active"], row["id"])
@@ -46,3 +58,14 @@ def update(gym_class):
     sql = "UPDATE gym_classes SET (name, date, start_time, duration, max_capacity, active) = (%s, %s, %s, %s, %s, %s) WHERE id = %s"
     values = [gym_class.name, str(gym_class.date), str(gym_class.start_time), gym_class.duration, gym_class.max_capacity, gym_class.active, gym_class.id]
     run_sql(sql, values)
+
+def show_members(gym_class):
+    members = []
+    sql = "SELECT members.* FROM members INNER JOIN members_gym_classes ON members_gym_classes.member_id = members.id WHERE gym_class_id = %s"
+    values = [gym_class.id]
+    results = run_sql(sql, values)
+
+    for row in results:
+        member = Member(row["name"], row["date_of_birth"], row["premium"], row["active"], row["id"])
+        members.append(member)   
+    return members

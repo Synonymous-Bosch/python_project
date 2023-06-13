@@ -1,0 +1,98 @@
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    bottom: 0;
+}
+
+body {
+    background-image: linear-gradient(to bottom right,aqua, hotpink);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    border-style:ridge;
+    border-color: black;
+    position: absolute;
+    text-decoration: none;
+    list-style-type: none;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    align-content: center;
+    vertical-align: middle;
+    background-image:linear-gradient(blueviolet, aqua);
+    color: white;
+    display: inline-grid;
+    height: 15%;
+    width: 100%;
+    grid-template:
+        "nav h1 h1" ;
+
+
+}
+
+header h1 {
+    grid-area: h1;
+    text-align:left;
+    vertical-align: middle;
+    line-height: 140%;
+}
+
+header nav {
+    grid-area: nav;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+header nav ul {
+    text-decoration: inherit;
+    list-style-type: none;
+}
+
+.container {
+    position:absolute;
+    top: 16%;
+    height: 76%;
+    width: 100%;
+    bottom: 0;
+}
+
+.home {
+    top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+
+}
+
+#text1 {
+    width: 50%;
+    text-align: center;
+}
+
+#image1 {
+    width: 50%;
+}
+
+#image2 {
+    width: 100%;
+
+}
+
+#text2 {
+    text-align: center;
+    width: 100%;
+    height: 150px;
+}
+
+footer {
+    background-color: inherit;
+}
