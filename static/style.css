@@ -4,6 +4,7 @@ html {
     margin: 0;
     padding: 0;
     bottom: 0%;
+    overflow: auto;
 }
 
 body {
@@ -15,14 +16,14 @@ body {
     margin: 0;
     padding: 0;
     bottom: 0;
-    /* overflow: hidden; */
+    overflow: auto;
 }
 
 header {
     color:gold;
     border-style:ridge;
     border-color: black;
-    position: absolute;
+    /* position: absolute; */
     text-decoration: none;
     list-style-type: none;
     top: 0;
@@ -74,7 +75,7 @@ header nav ul {
 }
 
 .container {
-    position:fixed;
+    /* position:fixed; */
     top: 16%;
     height: 100%;
     width: 100%;
@@ -126,7 +127,7 @@ header nav ul {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    width: 29%;
+    width: 39%;
     height: 40%;
     border-style:outset;
     border-color: black;
@@ -141,10 +142,10 @@ footer {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
-    width: 70%;
+    width: 60%;
     height: 40%;
     background-color: inherit;
-    /* overflow: hidden; */
+    border-style: outset;
 }
 
 #image1_container {
@@ -153,7 +154,6 @@ footer {
     width: 50%;
     height: 40%;
     background-color: inherit;
-    /* overflow: hidden; */
 }
 
 #noslow {
@@ -178,7 +178,7 @@ footer {
     padding-left: 8px;
     padding-right: 8px;
     margin-bottom: 16px;
-    line-height: 10px;
+    line-height: 7px;
     text-align: center;
 }
 

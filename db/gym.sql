@@ -22,6 +22,6 @@ CREATE TABLE members (
 
 CREATE TABLE members_gym_classes (
     id SERIAL PRIMARY KEY,
-    gym_class_id INT NOT NULL REFERENCES gym_classes(id),
-    member_id INT NOT NULL REFERENCES members(id)
+    gym_class_id INT NOT NULL REFERENCES gym_classes(id) ON DELETE CASCADE,
+    member_id INT NOT NULL REFERENCES members(id) ON DELETE CASCADE
 );

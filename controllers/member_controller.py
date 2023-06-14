@@ -8,20 +8,20 @@ import repositories.member_class_repository as member_class_repository
 
 members_blueprint = Blueprint("members", __name__)
 
-# INDEX
+# Index page to show all members
 @members_blueprint.route("/members")
 def members():
     members = member_repository.select_all()
     return render_template("members/index.html", members=members)
 
 
-# NEW
+# New member creation page
 @members_blueprint.route("/members/new")
 def new_member():
     return render_template("members/new.html")
 
 
-# CREATE
+# Create new member object
 @members_blueprint.route("/members", methods=["POST"])
 def create_members():
     name = request.form["name"]
@@ -32,14 +32,14 @@ def create_members():
     return redirect("/members")
 
 
-# EDIT
+# Edit member object page
 @members_blueprint.route("/members/<id>/edit")
 def edit_member(id):
     member = member_repository.select(id)
     return render_template('members/edit.html', member=member)
 
 
-# UPDATE
+# Update member object details
 @members_blueprint.route("/members/<id>", methods=["POST"])
 def update_member(id):
     name = request.form["name"]
@@ -51,13 +51,13 @@ def update_member(id):
     return redirect("/members")
 
 
-# DELETE
+# Delete member object
 @members_blueprint.route("/members/<id>/delete", methods=["POST"])
 def delete_member(id):
     member_repository.delete(id)
     return redirect("/members")
 
-# SHOW CLASSES BY MEMBER
+# Show classes specific member has registered to
 @members_blueprint.route("/members/<id>/show_classes")
 def show_classes_by_member(id):
     member = member_repository.select(id)

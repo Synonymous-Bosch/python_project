@@ -8,6 +8,7 @@ def delete_all():
     sql = "DELETE FROM members"
     run_sql(sql)
 
+# Select all members. Sort by member id.
 def select_all():
     members = []
     sql = "SELECT * FROM members"
@@ -20,13 +21,15 @@ def select_all():
     members.sort(key=lambda x: x.id)
     return members
 
+# Pull member data from table and create python object. Pulls serial ID from table and assigns to python object.
 def save(member):
     sql = "INSERT INTO members (name, date_of_birth, premium, active) VALUES (%s, %s, %s, %s) RETURNING id"
-    values = [member.name, str(member.date_of_birth), member.premium, member.active]
+    values = [member.name, member.date_of_birth, member.premium, member.active]
     results = run_sql(sql, values)
     id = results[0]['id']
     member.id = id
 
+# Pull specific member data from table and create and return relevant python object.
 def select(id):
     sql = "SELECT * FROM members WHERE id = %s"
     values = [id]
@@ -38,17 +41,19 @@ def select(id):
         member = Member(result["name"], date_of_birth, result["premium"], result["active"], result["id"])
     return member
 
+# Delete specific member from table, by id
 def delete(id):
     sql = "DELETE FROM members WHERE id = %s"
     values = [id]
     run_sql(sql, values)
 
-
+# Update member details on table
 def update(member):
     sql = "UPDATE members SET (name, date_of_birth, premium, active) = (%s, %s, %s, %s) WHERE id = %s"
-    values = [member.name, str(member.date_of_birth), member.premium, member.active, member.id]
+    values = [member.name, member.date_of_birth, member.premium, member.active, member.id]
     run_sql(sql, values)
 
+# return classes by member
 def show_classes(member):
     gym_classes = []
     sql = "SELECT gym_classes.* FROM gym_classes INNER JOIN members_gym_classes ON members_gym_classes.gym_class_id = gym_classes.id WHERE member_id = %s"

@@ -7,14 +7,8 @@ from repositories import gym_class_repository, member_repository, member_class_r
 
 member_class_blueprint = Blueprint("member_class", __name__)
 
-# INDEX
-@member_class_blueprint.route("/members_classes")
-def member_class():
-    member_class = member_class_repository.select_all()
-    return render_template("members_classes/index.html", member_class=member_class)
 
-
-# # NEW
+# # Member to class registration
 @member_class_blueprint.route("/members_classes/new")
 def new_member_class():
     members = member_repository.select_all()
@@ -22,7 +16,7 @@ def new_member_class():
     return render_template("members_classes/new.html", members=members, classes=gym_classes)
 
 
-# # CREATE
+# # Create new member_class object, registering member for class
 @member_class_blueprint.route("/members_classes", methods=["POST"])
 def create_member_class():
     gym_class_id = request.form["gym_class"]
@@ -34,14 +28,14 @@ def create_member_class():
     return redirect("/members")
 
 
-# # EDIT
+# # Edit member_class object page. Not currently used.
 @member_class_blueprint.route("/members_classes/<id>/edit")
 def edit_member_class(id):
     member_class = member_class_repository.select(id)
     return render_template('members_classes/edit.html', member_class=member_class)
 
 
-# # UPDATE
+# # Update member_class object data. Not currently used.
 @member_class_blueprint.route("/members_classes/<id>", methods=["POST"])
 def update_member_class(id):
     gym_class_id = request.form["gym_class_id"]
@@ -51,13 +45,13 @@ def update_member_class(id):
     return redirect("/members_classes")
 
 
-# # DELETE
+# # Delete member_class object (de-register member from class)
 @member_class_blueprint.route("/members_classes/<member_id>/<gym_class_id>/delete", methods=["POST"])
 def delete_member_class(member_id, gym_class_id):
     member_class_repository.delete(member_id, gym_class_id)
     return redirect(f"/members/{member_id}/show_classes")
 
-# # CREATE BY MEMBER
+# # Create member_class object for specific member
 @member_class_blueprint.route("/members_classes/<id>/show_classes/new", methods=["POST"])
 def register_class_by_member(id):
     gym_class_id = request.form["gym_class"]
